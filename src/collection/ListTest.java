@@ -138,5 +138,97 @@ public class ListTest {
             System.out.println(linkedList.get(i));
         }
 
+
+        //Set
+        HashSet hashset = new HashSet<>();
+       boolean adda= hashset.add("a");
+       boolean adda2= hashset.add("a");
+        hashset.add("b");
+        hashset.add("b");
+        hashset.add("c");
+        System.out.println("第一次添加a元素："+adda);
+        System.out.println("第二次添加a元素："+adda2);
+        Iterator hashiterator=hashset.iterator();
+        while (hashiterator.hasNext()) {
+            System.out.println(hashiterator.next());
+        }
+        //先重写person对象的equals和hashCode方法,判断是否为相同元素
+        //不重写按java默认的equals和hashcode比较
+        Person person1 = new Person("zhangsan",19);
+
+        Person person2 = new Person("zhangsan",18);
+        boolean addp1=hashset.add(person1);
+        boolean addp2=hashset.add(person2);
+//        person1.age=20;  //取消注释这一行,注释掉下一行，也是addp3也是true，但是hashset中会有两个相同的person1  //默认的hashcode不会有
+        person1=new Person("zhangsan",20);
+        boolean addp3=hashset.add(person1);
+        System.out.println("第一次添加person1元素："+addp1);
+        System.out.println("第一次添加person2元素："+addp2);
+        System.out.println("第一次添加person2元素："+addp3);
+        Collection collection2 = new ArrayList();
+//        collection2.add("a");
+//        hashset.retainAll(collection2);
+        for (Object obj:hashset) {
+            System.out.println(obj.toString());
+        }
     }
+
+
+
+
+    static class Person{
+        String  name;
+        int age;
+
+        public Person(String name, int age) {
+            this.name = name;
+            this.age = age;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+//            System.out.println("equals");
+            if (this == obj) // 如果两个对象地址一样 返回true
+                return true;
+            if (obj == null)// 如果传进来的对象是空 返回false
+                return false;
+            if (getClass() != obj.getClass())  // 如果两个对象不是一个类创建出来的
+                return false;                  // 就返回 false
+            Person other = (Person) obj;            // 向下转型(准备调用特有方法)
+            if (age != other.age)
+                return false;
+            if (name == null) {
+                if (other.name != null)
+                    return false;
+            } else if (!name.equals(other.name))
+                return false;
+            return true;
+        }
+
+        //继承父类的hashcode(),无论你怎样改变person1的属性值，person1的对象创建后的哈希值是相同的 即 addp3=false
+        //重写后 addp3=true *注意* 虽然addp3为true，两个person1元素属性都会变成20
+        //写的比较乱，各位童鞋还是自己动手多写写就明白了
+        @Override
+        public int hashCode() {
+            final int prime = 100;
+            int result = 1;
+            result = prime * result + age;
+            result = prime * result + ((name == null) ? 0 : name.hashCode());
+            System.out.println("hash值："+result);
+            return result;
+//            return super.hashCode();
+        }
+
+        @Override
+        public String toString() {
+            return "Person{" +
+                    "name='" + name + '\'' +
+                    ", age=" + age +
+                    '}';
+        }
+    }
+
+
+
+
 }
