@@ -1,6 +1,13 @@
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+
+        double a =0;
+        if(a==0){
+            System.out.println("a=0");
+        }
+        if(a==0.0){
+            System.out.println("a=0.0");
+        }
     }
 }
