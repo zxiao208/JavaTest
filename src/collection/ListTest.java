@@ -10,6 +10,11 @@ public class ListTest {
         collection.add(1);
         collection.add(2);
 
+
+
+
+
+
         //ArrayList集合list
         List list = new ArrayList();
         System.out.println("数组是否为空：" + list.isEmpty());
@@ -112,6 +117,9 @@ public class ListTest {
         }).start();
 
 
+
+
+
         //LinkedList
         Collection collection1 = new ArrayList();
         collection1.add(1);
@@ -139,7 +147,12 @@ public class ListTest {
         }
 
 
+
+
+
+
         //Set
+        //hashset
         HashSet hashset = new HashSet<>();
        boolean adda= hashset.add("a");
        boolean adda2= hashset.add("a");
@@ -158,22 +171,22 @@ public class ListTest {
 
         Person person2 = new Person("zhangsan",18);
         boolean addp1=hashset.add(person1);
+        System.out.println("person1的hash值："+person1.hashCode());
         boolean addp2=hashset.add(person2);
-//        person1.age=20;  //取消注释这一行,注释掉下一行，也是addp3也是true，但是hashset中会有两个相同的person1  //默认的hashcode不会有
-        person1=new Person("zhangsan",20);
+        person1.age=20;  //取消注释这一行,注释掉下一行，变成addp3也是true，但是hashset中会有两个相同的person1  //默认的hashcode不会有
+        System.out.println("person1的hash值："+person1.hashCode());
+//        person1=new Person("zhangsan",19);
         boolean addp3=hashset.add(person1);
         System.out.println("第一次添加person1元素："+addp1);
         System.out.println("第一次添加person2元素："+addp2);
-        System.out.println("第一次添加person2元素："+addp3);
+        System.out.println("第二次添加person1元素："+addp3);
         Collection collection2 = new ArrayList();
 //        collection2.add("a");
 //        hashset.retainAll(collection2);
         for (Object obj:hashset) {
-            System.out.println(obj.toString());
+            System.out.println(obj.hashCode()+" "+ obj.toString());
         }
     }
-
-
 
 
     static class Person{
@@ -188,20 +201,26 @@ public class ListTest {
         @Override
         public boolean equals(Object obj) {
 //            System.out.println("equals");
-            if (this == obj) // 如果两个对象地址一样 返回true
+            if (this == obj){ // 如果两个对象地址一样 返回true
                 return true;
-            if (obj == null)// 如果传进来的对象是空 返回false
+
+            }
+            if (obj == null){// 如果传进来的对象是空 返回false
                 return false;
-            if (getClass() != obj.getClass())  // 如果两个对象不是一个类创建出来的
-                return false;                  // 就返回 false
-            Person other = (Person) obj;            // 向下转型(准备调用特有方法)
-            if (age != other.age)
+            }
+            if (getClass() != obj.getClass()) {    // 如果两个对象不是一个类创建出来的
                 return false;
+            }// 就返回 false
+            Person other = (Person) obj;        // 向下转型(准备调用特有方法)
+            if (age != other.age) {
+                return false;
+            }
             if (name == null) {
                 if (other.name != null)
                     return false;
-            } else if (!name.equals(other.name))
+            } else if (!name.equals(other.name)) {
                 return false;
+            }
             return true;
         }
 
@@ -230,5 +249,7 @@ public class ListTest {
 
 
 
+    //Treeset
+    
 
 }
