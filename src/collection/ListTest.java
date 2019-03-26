@@ -152,7 +152,7 @@ public class ListTest {
 
 
         //Set
-        //hashset
+        //hashset 无序的
         HashSet hashset = new HashSet<>();
        boolean adda= hashset.add("a");
        boolean adda2= hashset.add("a");
@@ -186,10 +186,41 @@ public class ListTest {
         for (Object obj:hashset) {
             System.out.println(obj.hashCode()+" "+ obj.toString());
         }
+
+        //Treeset 不重复元素
+        Set<String> treeSet=new TreeSet<>();
+        treeSet.add("3");
+        treeSet.add("2");
+        treeSet.add("1");
+        treeSet.add("1");
+        treeSet.add("4");
+        Iterator<String> stringIterator = treeSet.iterator();
+        System.out.println(treeSet);
+        while (stringIterator.hasNext()){
+            System.out.println(stringIterator.next());
+        }
+
+        TreeSet<Person> treeSet1=new TreeSet<>();
+        treeSet1.add(new Person("王五",20));
+        treeSet1.add(new Person("王五",19));
+        treeSet1.add(new Person("李四",18));
+        treeSet1.add(new Person("张三",21));
+        treeSet1.add(new Person("赵六",20));
+        System.out.println(treeSet1); //不能直接输出，必须实现接口comparable重写接口中的compareTo
+
+        //还可以自定义比较器进行排序
+        TreeSet<Person> treeSet2=new TreeSet<>(new CompareByLen());
+        treeSet2.add(new Person("周杰伦",36));
+        treeSet2.add(new Person("李建",40));
+        treeSet2.add(new Person("哈林",50));
+        treeSet2.add(new Person("谢霆锋",35));
+        treeSet2.add(new Person("旦增尼玛",28));
+        System.out.println(treeSet2); //
+
     }
 
 
-    static class Person{
+    static class Person implements Comparable<Person>{
         String  name;
         int age;
 
@@ -245,11 +276,26 @@ public class ListTest {
                     ", age=" + age +
                     '}';
         }
+
+
+        @Override
+        public int compareTo(Person o) {
+            int num=this.age-o.age;
+            return num==0?this.name.compareTo(o.name):num;
+        }
     }
 
 
+    //TreeSet比较器 //根据人的名字长度进行排序
+    static class CompareByLen implements Comparator<Person>{
 
-    //Treeset
-    
+        @Override
+        public int compare(Person o1,Person o2) {
+            int num=o1.name.length()-o2.name.length();
+            return num==0?o1.name.compareTo(o2.name):num;  //如果长度相同根据内容
+        }
+    }
+
+
 
 }
